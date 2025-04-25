@@ -5,9 +5,9 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Home = () => {
   const images = [
-    
-    "/b6.jpg",
+    "homepages.png",
     "/b8.jpg",
+    "/b6.jpg",
     "/b7.jpg",
     "/b5.jpg",
     "/b9.jpg",

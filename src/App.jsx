@@ -3,7 +3,8 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import "./App.css";
 import Navbar from "./Components/Navbar";
-import { Route, Routes } from "react-router-dom";
+import AdminNavbar from "./Components/AdminNavbar";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Login from "./Components/Login";
 import Signup from "./Components/Signup";
 import Home from "./Components/Home";
@@ -15,10 +16,13 @@ import ProtectedRoute from "./Components/ProtectedRoute";
 import DisplayReview from "./Components/DisplayReview";
 function App() {
   const [count, setCount] = useState(0);
+  const location = useLocation(); // Get the current route location
+  const isAdminRoute = location.pathname.startsWith('/Admin'); 
 
   return (
     <>
-      <Navbar />
+        {!isAdminRoute && <Navbar />} {/* Conditionally render the main Navbar */}
+        {isAdminRoute && <AdminNavbar />} 
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Home" element={<Home />} />

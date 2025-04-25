@@ -121,6 +121,7 @@ const BookReview = () => {
             flexDirection: "column",
             maxWidth: "300px",
             margin: "20px auto",
+            height:"310px"
           }}
         >
           <h5
@@ -160,7 +161,7 @@ const BookReview = () => {
             onChange={(e) => setReviewText(e.target.value)}
             style={{
               padding: "8px",
-              marginBottom: "15px",
+              marginBottom: "20px",
               border: "1.5px solid rgb(129,77,8)",
               borderRadius: "5px",
               fontSize: "16px",
@@ -181,12 +182,14 @@ const BookReview = () => {
               borderRadius: "3px",
               cursor: "pointer",
               fontSize: "16px",
-              marginBottom: "10px",
+              marginBottom: "3px",
             }}
           >
             Submit
           </button>
-          <button
+          
+        </form>
+        <button
             style={{
               padding: "8px 12px",
               backgroundColor: "rgb(129,77,8)",
@@ -195,12 +198,14 @@ const BookReview = () => {
               borderRadius: "3px",
               cursor: "pointer",
               fontSize: "16px",
+              width:"215px",
+              margin:"auto",
+              marginBottom:"20px",marginTop:"0px",
             }}
-            onClick={() => naviagte(-1)}
+            onClick={() => navigate(-1)}
           >
             Go Back
           </button>
-        </form>
       </div>
     </div>
   );

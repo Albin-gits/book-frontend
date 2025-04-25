@@ -51,7 +51,7 @@ const Reviews = () => {
               <Card
                 onClick={() => navigate(`/displayreview/${review._id}`)}
                 sx={{
-                  height: 250,
+                  height: 150,
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
@@ -61,8 +61,19 @@ const Reviews = () => {
                   position: "relative",
                 }}
               >
-                <CardContent sx={{ flexGrow: 1 }}>
-                  <Typography variant="h6" gutterBottom noWrap>
+                <CardContent
+                  sx={{ flexGrow: 1, overflow: "hidden", maxHeight: 150 }}
+                >
+                  <Typography
+                    sx={{
+                      textOverflow: "ellipsis",
+                      overflow: "hidden",
+                      whiteSpace: "nowrap",
+                    }}
+                    variant="h6"
+                    gutterBottom
+                    noWrap
+                  >
                     {review.bookTitle}
                   </Typography>
                   <Typography variant="subtitle2" color="text.secondary">
@@ -84,8 +95,8 @@ const Reviews = () => {
                     color: "white",
                     opacity: 0, // Initially hidden
                     transition: "opacity 0.3s ease", // Smooth transition
-                    pointerEvents: "none",
-                    "&:hover": {
+                  
+                    "&:hover": {      
                       opacity: 1, // Show text on hover
                     },
                   }}
@@ -94,7 +105,7 @@ const Reviews = () => {
                 </Box>
 
                 {review.username === loggedInUser && (
-                  <CardActions>
+                  <CardActions >
                     <Button
                       size="small"
                       color="primary"
