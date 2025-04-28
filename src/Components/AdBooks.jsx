@@ -24,7 +24,7 @@ const Item = styled(Paper)(({ theme }) => ({
   }),
 }));
 
-const Books = () => {
+const AdBooks = () => {
   var [user, setUser] = useState([]);
   useEffect(() => {
     axios
@@ -36,11 +36,12 @@ const Books = () => {
       });
   }, []);
   return (
-    <div style={{padding:"15px", backgroundColor: "rgb(210, 180, 140)"}}>
-      <Grid container spacing={3} >
+    <div style={{ padding:"10px",backgroundColor: "rgb(210, 180, 140)", maxWidth: "100%" }}>
+        <h1 style={{margin:"0px",marginBottom:"10px"}}>Books List</h1>
+      <Grid container spacing={3}>
         {user.map((val) => {
           return (
-            <Grid size={3} sx={{marginTop:"20px",marginBottom:"20px",}}>
+            <Grid size={3} sx={{ marginTop: "20px", marginBottom: "20px" }}>
               <Link
                 to={`/BookReview/${val.isbn13}`}
                 style={{ textDecoration: "none" }}
@@ -71,26 +72,6 @@ const Books = () => {
                         {val.subtitle}
                       </Typography>
                     </CardContent>
-                    <Box
-                      className="hoverText"
-                      sx={{
-                        position: "absolute",
-                        top: 0,
-                        left: 0,
-                        width: "100%",
-                        height: "100%",
-                        bgcolor: "rgba(0, 0, 0, 0.3)",
-                        color: "#fff",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        opacity: 0,
-                        transition: "opacity 0.3s ease",
-                        borderRadius: 1,
-                      }}
-                    >
-                      <Typography variant="h6">Click to add review</Typography>
-                    </Box>
                   </Card>
                 </Item>
               </Link>
@@ -101,5 +82,4 @@ const Books = () => {
     </div>
   );
 };
-
-export default Books;
+export default AdBooks;

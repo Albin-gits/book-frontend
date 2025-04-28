@@ -10,6 +10,7 @@ import {
   Button,
   Container,
   Box,
+  CardMedia,
 } from "@mui/material";
 
 const Reviews = () => {
@@ -38,7 +39,7 @@ const Reviews = () => {
         <Typography variant="h4" align="center" gutterBottom>
           All Reviews
         </Typography>
-        <Grid container spacing={3}>
+        <Grid container spacing={4}>
           {reviews.map((review) => (
             <Grid
               item
@@ -51,16 +52,25 @@ const Reviews = () => {
               <Card
                 onClick={() => navigate(`/displayreview/${review._id}`)}
                 sx={{
-                  height: 150,
+                  height: 300,
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  width: "100%",
+                  width: "250px",
                   "&:hover": { boxShadow: 6 },
                   position: "relative",
                 }}
               >
+                <CardMedia
+                  sx={{
+                    height: 150,
+                    width: 180,
+                    margin: "auto",
+                    marginTop: "15px",
+                  }}
+                  image={review.image}
+                />
                 <CardContent
                   sx={{ flexGrow: 1, overflow: "hidden", maxHeight: 150 }}
                 >
@@ -69,6 +79,7 @@ const Reviews = () => {
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
+                      marginTop: "15px",
                     }}
                     variant="h6"
                     gutterBottom
@@ -76,7 +87,11 @@ const Reviews = () => {
                   >
                     {review.bookTitle}
                   </Typography>
-                  <Typography variant="subtitle2" color="text.secondary">
+                  <Typography
+                    variant="subtitle2"
+                    color="text.secondary"
+                    sx={{ marginTop: "10px" }}
+                  >
                     By: {review.username}
                   </Typography>
                 </CardContent>
@@ -95,8 +110,8 @@ const Reviews = () => {
                     color: "white",
                     opacity: 0, // Initially hidden
                     transition: "opacity 0.3s ease", // Smooth transition
-                  
-                    "&:hover": {      
+
+                    "&:hover": {
                       opacity: 1, // Show text on hover
                     },
                   }}
@@ -105,7 +120,7 @@ const Reviews = () => {
                 </Box>
 
                 {review.username === loggedInUser && (
-                  <CardActions >
+                  <CardActions>
                     <Button
                       size="small"
                       color="primary"

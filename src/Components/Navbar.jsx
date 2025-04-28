@@ -63,7 +63,7 @@ const Navbar = () => {
                 marginRight: 2,
                 Color: "white",
                 backgroundColor:
-                  location.pathname === "/MyReviews"
+                  location.pathname === "/Reviews"
                     ? "rgb(255, 153, 51)"
                     : "rgb(129,77,8)",
                 "&:hover": {

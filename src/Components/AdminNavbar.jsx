@@ -21,8 +21,24 @@ const Navbar = () => {
           <Typography variant="h5" sx={{ flexGrow: 1, color: "white" }}>
             Admin
           </Typography>
-          
-          
+          <Link to="/Admin">
+            <Button
+              sx={{
+                marginRight: 2,
+                Color: "rgb(250, 250, 250)",
+                backgroundColor:
+                  location.pathname === "/Admin"
+                    ? "rgb(255, 153, 51)"
+                    : "rgb(129,77,8)",
+                "&:hover": {
+                  backgroundColor: "rgb(255, 153, 51)",
+                },
+              }}
+              variant="contained"
+            >
+              Home
+            </Button>
+          </Link>
 
           {isLoggedIn ? (
             <Button
