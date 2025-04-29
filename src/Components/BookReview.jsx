@@ -32,9 +32,9 @@ const BookReview = () => {
       subtitle: book.subtitle,
     };
     if (isEditing) {
-      await axios.put(`http://localhost:3004/review/${reviewToEdit._id}`, review);
+      await axios.put(`https://book-backend-uu0f.onrender.com/review/${reviewToEdit._id}`, review);
     } else {
-      await axios.post("http://localhost:3004/reviews", review);
+      await axios.post("https://book-backend-uu0f.onrender.com/reviews", review);
     }
 
     navigate("/reviews");

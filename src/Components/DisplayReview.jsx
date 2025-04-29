@@ -8,7 +8,7 @@ const DisplayReview = () => {
   const [review, setReview] = useState(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:3004/review/${id}`).then((res) => {
+    axios.get(`https://book-backend-uu0f.onrender.com/review/${id}`).then((res) => {
       setReview(res.data);
     });
   }, [id]);

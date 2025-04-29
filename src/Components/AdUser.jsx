@@ -8,7 +8,7 @@ const AdUser = () => {
   // Fetch users
   const fetchUsers = async () => {
     try {
-      const res = await axios.get("http://localhost:3004/users");
+      const res = await axios.get("https://book-backend-uu0f.onrender.com/users");
       setUsers(res.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -22,7 +22,7 @@ const AdUser = () => {
   // Delete user
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3004/user/${id}`);
+      await axios.delete(`https://book-backend-uu0f.onrender.com/user/${id}`);
       fetchUsers(); // Refresh the list after deletion
     } catch (error) {
       console.error("Error deleting user:", error);

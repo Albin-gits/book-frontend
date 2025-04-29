@@ -23,7 +23,7 @@ const Signup = () => {
       alert('Please fill in all the required fields.');
       return; 
     }
-    axios.post("http://localhost:3004/add",Inputs)
+    axios.post("https://book-backend-uu0f.onrender.com/add",Inputs)
     .then((response)=>{
         console.log(response);
         alert(response.data.message)

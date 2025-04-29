@@ -18,7 +18,7 @@ const AdReview = () => {
   // Fetch reviews from the backend
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('http://localhost:3004/reviews');
+      const response = await axios.get('https://book-backend-uu0f.onrender.com/reviews');
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -32,7 +32,7 @@ const AdReview = () => {
   // Delete a review
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:3004/review/${id}`);
+      await axios.delete(`https://book-backend-uu0f.onrender.com/review/${id}`);
       setReviews(reviews.filter((review) => review._id !== id));
     } catch (error) {
       console.error('Error deleting review:', error);
