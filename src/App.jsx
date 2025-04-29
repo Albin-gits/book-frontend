@@ -17,6 +17,9 @@ import DisplayReview from "./Components/DisplayReview";
 import AdBooks from "./Components/AdBooks";
 import AdUser from "./Components/AdUser";
 import AdReview from "./Components/AdReview";
+import About from "./Components/About";
+import Privacy from "./Components/Privacy";
+import Contact from "./Components/Contact";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -58,6 +61,8 @@ function App() {
         <Route path="/AdUser" element={<AdUser />} /> {/* Route for AdUser */}
         <Route path="/AdReview" element={<AdReview />} /> 
         <Route path="/DisplayReview/:id" element={<DisplayReview />} />
+       
+        <Route path="/Contact" element={<ProtectedRoute><Contact /></ProtectedRoute>} />
       </Routes>
     </>
   );

@@ -29,15 +29,15 @@ const AdBooks = () => {
   useEffect(() => {
     axios
       .get("https://api.itbook.store/1.0/new")
-
       .then((response) => {
         console.log(response.data.items);
         setUser(response.data.books);
       });
   }, []);
+
   return (
-    <div style={{ padding:"10px",backgroundColor: "rgb(210, 180, 140)", maxWidth: "100%" }}>
-        <h1 style={{margin:"0px",marginBottom:"10px"}}>Books List</h1>
+    <div style={{ padding:"10px", backgroundColor: "rgb(210, 180, 140)", maxWidth: "100%" }}>
+      <h1 style={{ margin:"0px", marginBottom:"10px" }}>Books List</h1>
       <Grid container spacing={3}>
         {user.map((val) => {
           return (
@@ -60,7 +60,6 @@ const AdBooks = () => {
                       image={val.image}
                       title={val.title}
                     />
-
                     <CardContent>
                       <Typography gutterBottom variant="h5" component="div">
                         {val.price}
@@ -78,8 +77,38 @@ const AdBooks = () => {
             </Grid>
           );
         })}
+
+        {/* Add New Book Card */}
+        <Grid size={3} sx={{ marginTop: "20px", marginBottom: "20px"}}>
+          <Item
+            sx={{
+              position: "relative",
+              height: "100%",
+              backgroundColor: "#f5f5f5",
+              border: "2px dashed #888",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: "20px",
+              marginTop:"-25px",
+            }}
+          >
+            <Card sx={{ maxWidth: 345, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+              <CardContent>
+                <Typography variant="h5" component="div" style={{ marginBottom: "20px" }}>
+                  Add a New Book
+                </Typography>
+                {/* Custom button or form to add a new book */}
+                <Button variant="contained" color="primary">
+                  Add Book
+                </Button>
+              </CardContent>
+            </Card>
+          </Item>
+        </Grid>
       </Grid>
     </div>
   );
 };
+
 export default AdBooks;

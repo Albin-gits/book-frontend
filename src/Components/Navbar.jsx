@@ -19,7 +19,7 @@ const Navbar = () => {
       <AppBar sx={{ backgroundColor: "rgb(40,20,5)", position: "static" }}>
         <Toolbar>
           <Typography variant="h5" sx={{ flexGrow: 1, color: "white" }}>
-            Book Reviews
+            BOOK LENS
           </Typography>
           <Link to="/Home">
             <Button
@@ -57,6 +57,7 @@ const Navbar = () => {
               Books
             </Button>
           </Link>
+          
           <Link to="/Reviews">
             <Button
               sx={{
@@ -75,7 +76,24 @@ const Navbar = () => {
               Reviews
             </Button>
           </Link>
-
+          <Link to="/Contact">
+            <Button
+              sx={{
+                marginRight: 2,
+                Color: "rgb(250, 250, 250)",
+                backgroundColor:
+                  location.pathname === "/Contact"
+                    ? "rgba(255, 153, 51)"
+                    : "rgb(129,77,8)",
+                "&:hover": {
+                  backgroundColor: "rgb(255, 153, 51)",
+                },
+              }}
+              variant="contained"
+            >
+              CONTACT US
+            </Button>
+          </Link>
           {isLoggedIn ? (
             <Button
               onClick={handleLogout}
