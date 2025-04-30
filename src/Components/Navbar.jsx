@@ -1,10 +1,14 @@
-import { AppBar, Button, Toolbar, Typography, Box } from "@mui/material";
 import React from "react";
+import { AppBar, Button, Toolbar, Typography, Box } from "@mui/material";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { styled } from "@mui/material/styles";
+import { useMediaQuery, useTheme } from "@mui/material";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const theme = useTheme();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
 
   const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
 
@@ -33,6 +37,7 @@ const Navbar = () => {
       sm: "0.4rem 0.7rem",
       md: "0.5rem 1rem",
     },
+    marginRight: isSmallScreen ? "0.5rem" : "1rem", // Adjust right margin
   });
 
   return (
