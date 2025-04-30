@@ -22,7 +22,6 @@ const Reviews = () => {
     axios.get("https://book-backend-uu0f.onrender.com/reviews").then((res) => {
       setReviews(res.data);
     });
-    
   }, []);
 
   const handleDelete = async (id) => {
