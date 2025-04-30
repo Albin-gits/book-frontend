@@ -66,7 +66,7 @@ const Reviews = () => {
                 <CardMedia
                   sx={{
                     height: { xs: 150, sm: 180, md: 200 }, // Responsive image height
-                    width: "auto",  // Maintain aspect ratio
+                    width: "auto",  // Maintain aspect ratio
                     maxWidth: "100%", // Ensure image doesn't overflow
                     margin: "auto",
                     marginTop: "1rem",
