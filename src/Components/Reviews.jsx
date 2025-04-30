@@ -36,51 +36,53 @@ const Reviews = () => {
   return (
     <div style={{ backgroundColor: "rgb(210, 180, 140)", minHeight: "100vh" }}>
       <Container sx={{ paddingY: 4 }}>
-        <Typography variant="h4" align="center" gutterBottom>
+        <Typography variant="h4" align="center" gutterBottom sx={{ fontSize: { xs: '2rem', sm: '2.5rem' } }}>
           All Reviews
         </Typography>
-        <Grid sx={{marginLeft:"25px",paddingLeft:"10px"}}container spacing={4}>
+        <Grid container spacing={4}>
           {reviews.map((review) => (
             <Grid
-              item  
+              item
               xs={12}
               sm={6}
               md={4}
+              lg={3} // Added lg breakpoint for larger screens
               key={review._id}
               sx={{ display: "flex" }}
             >
               <Card
                 onClick={() => navigate(`/displayreview/${review._id}`)}
                 sx={{
-                  height: 300,
+                  height: "100%", // Make card height responsive
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  width: "250px",
+                  width: "100%", // Make card width responsive
                   "&:hover": { boxShadow: 6 },
                   position: "relative",
-                  
                 }}
               >
                 <CardMedia
                   sx={{
-                    height: 150,
-                    width: 180,
+                    height: { xs: 150, sm: 180, md: 200 }, // Responsive image height
+                    width: "auto",  // Maintain aspect ratio
+                    maxWidth: "100%", // Ensure image doesn't overflow
                     margin: "auto",
-                    marginTop: "15px",
+                    marginTop: "1rem",
+                    flexShrink: 0,
                   }}
                   image={review.image}
+                  title={review.bookTitle}
                 />
-                <CardContent
-                  sx={{ flexGrow: 1, overflow: "hidden", maxHeight: 150 }}
-                >
+                <CardContent sx={{ flexGrow: 1, overflow: "hidden", maxHeight: "auto" }}>
                   <Typography
                     sx={{
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
-                      marginTop: "15px",
+                      marginTop: "1rem",
+                      fontSize: { xs: '1.2rem', sm: '1.3rem' }, // Responsive font size
                     }}
                     variant="h6"
                     gutterBottom
@@ -91,7 +93,7 @@ const Reviews = () => {
                   <Typography
                     variant="subtitle2"
                     color="text.secondary"
-                    sx={{ marginTop: "10px" }}
+                    sx={{ marginTop: "0.5rem", fontSize: {xs: '0.8rem', sm: '0.9rem'} }}
                   >
                     By: {review.username}
                   </Typography>
@@ -107,21 +109,20 @@ const Reviews = () => {
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    backgroundColor: "rgba(0, 0, 0, 0.3)", // Semi-transparent background
+                    backgroundColor: "rgba(0, 0, 0, 0.3)",
                     color: "white",
-                    opacity: 0, // Initially hidden
-                    transition: "opacity 0.3s ease", // Smooth transition
-
+                    opacity: 0,
+                    transition: "opacity 0.3s ease",
                     "&:hover": {
-                      opacity: 1, // Show text on hover
+                      opacity: 1,
                     },
                   }}
                 >
-                  <Typography variant="h6">Click for review</Typography>
+                  <Typography variant="h6" sx={{fontSize: {xs: '1rem', sm: '1.2rem'} }}>Click for review</Typography>
                 </Box>
 
                 {review.username === loggedInUser && (
-                  <CardActions>
+                  <CardActions sx={{ justifyContent: "flex-end" }}>
                     <Button
                       size="small"
                       color="primary"
