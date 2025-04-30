@@ -65,7 +65,7 @@ const Contact = () => {
           We'd love to hear from you! Send us your feedback or questions.
         </p>
 
-        <form onSubmit={handleSubmit} style={{ marginTop: "1.5rem" }}>
+        <form onSubmit={handleSubmit} style={{ marginTop: "1.5rem",marginLeft:"5px" }}>
           <label htmlFor="name">Name</label>
           <input
             type="text"

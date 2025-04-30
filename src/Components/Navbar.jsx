@@ -1,4 +1,4 @@
-import { AppBar, Button, Toolbar, Typography } from "@mui/material";
+import { AppBar, Button, Toolbar, Typography, Box } from "@mui/material";
 import React from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
@@ -11,127 +11,92 @@ const Navbar = () => {
   const handleLogout = () => {
     localStorage.removeItem("isLoggedIn");
     localStorage.removeItem("role");
-    navigate("/Login"); // Redirect to Login after logout
+    navigate("/Login");
   };
 
+  const navButtonStyle = (path) => ({
+    margin: "0.25rem",
+    color: "white",
+    backgroundColor:
+      location.pathname === path ? "rgb(255, 153, 51)" : "rgb(129,77,8)",
+    "&:hover": {
+      backgroundColor: "rgb(255, 153, 51)",
+    },
+    fontSize: {
+      xs: "0.7rem",
+      sm: "0.8rem",
+      md: "0.9rem",
+      lg: "1rem",
+    },
+    padding: {
+      xs: "0.3rem 0.5rem",
+      sm: "0.4rem 0.7rem",
+      md: "0.5rem 1rem",
+    },
+  });
+
   return (
-    <div>
-      <AppBar sx={{ backgroundColor: "rgb(40,20,5)", position: "static" }}>
-        <Toolbar>
-          <Typography variant="h5" sx={{ flexGrow: 1, color: "white" }}>
+    <Box sx={{ flexGrow: 1 }}>
+      <AppBar position="static" sx={{ backgroundColor: "rgb(40,20,5)" }}>
+        <Toolbar
+          sx={{
+            display: "flex",
+            flexDirection: { xs: "column", sm: "row" },
+            alignItems: "center",
+            justifyContent: "space-between",
+            flexWrap: "wrap",
+            padding: "0.5rem 1rem",
+          }}
+        >
+          <Typography
+            variant="h5"
+            sx={{
+              color: "white",
+              fontSize: { xs: "1.2rem", sm: "1.5rem", md: "1.75rem" },
+              marginBottom: { xs: "0.5rem", sm: 0 },
+            }}
+          >
             BOOK LENS
           </Typography>
-          <Link to="/Home">
-            <Button
-              sx={{
-                marginRight: 2,
-                Color: "rgb(250, 250, 250)",
-                backgroundColor:
-                  location.pathname === "/Home" || location.pathname === "/"
-                    ? "rgba(255, 153, 51)"
-                    : "rgb(129,77,8)",
-                "&:hover": {
-                  backgroundColor: "rgb(255, 153, 51)",
-                },
-              }}
-              variant="contained"
-            >
-              Home
-            </Button>
-          </Link>
-          <Link to="/Books">
-            <Button
-              sx={{
-                marginRight: 2,
-                Color: "white",
-                backgroundColor:
-                  location.pathname === "/Books"
-                    ? "rgb(255, 153, 51)"
-                    : "rgb(129,77,8)",
-                "&:hover": {
-                  backgroundColor: "rgb(255, 153, 51)",
-                },
-              }}
-              variant="contained"
-            >
-              Books
-            </Button>
-          </Link>
-          
-          <Link to="/Reviews">
-            <Button
-              sx={{
-                marginRight: 2,
-                Color: "white",
-                backgroundColor:
-                  location.pathname === "/Reviews"
-                    ? "rgb(255, 153, 51)"
-                    : "rgb(129,77,8)",
-                "&:hover": {
-                  backgroundColor: "rgb(255, 153, 51)",
-                },
-              }}
-              variant="contained"
-            >
-              Reviews
-            </Button>
-          </Link>
-          <Link to="/Contact">
-            <Button
-              sx={{
-                marginRight: 2,
-                Color: "rgb(250, 250, 250)",
-                backgroundColor:
-                  location.pathname === "/Contact"
-                    ? "rgba(255, 153, 51)"
-                    : "rgb(129,77,8)",
-                "&:hover": {
-                  backgroundColor: "rgb(255, 153, 51)",
-                },
-              }}
-              variant="contained"
-            >
-              CONTACT US
-            </Button>
-          </Link>
-          {isLoggedIn ? (
-            <Button
-              onClick={handleLogout}
-              sx={{
-                marginRight: 2,
-                color: "white",
-                backgroundColor: "rgb(129,77,8)",
-                "&:hover": {
-                  backgroundColor: "rgb(255, 153, 51)",
-                },
-              }}
-              variant="contained"
-            >
-              Logout
-            </Button>
-          ) : (
-            <Link to="/Login">
-              <Button
-                variant="contained"
-                sx={{
-                  marginRight: 2,
-                  color: "white",
-                  backgroundColor:
-                    location.pathname === "/Login"
-                      ? "rgb(255, 153, 51)"
-                      : "rgb(129,77,8)",
-                  "&:hover": {
-                    backgroundColor: "rgb(255, 153, 51)",
-                  },
-                }}
-              >
-                Login
+
+          <Box
+            sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
+          >
+            <Link to="/Home">
+              <Button sx={navButtonStyle("/Home")} variant="contained">
+                Home
               </Button>
             </Link>
-          )}
+            <Link to="/Books">
+              <Button sx={navButtonStyle("/Books")} variant="contained">
+                Books
+              </Button>
+            </Link>
+            <Link to="/Reviews">
+              <Button sx={navButtonStyle("/Reviews")} variant="contained">
+                Reviews
+              </Button>
+            </Link>
+
+            {isLoggedIn ? (
+              <Button
+                onClick={handleLogout}
+                sx={navButtonStyle("/logout")}
+                variant="contained"
+              >
+                Logout
+              </Button>
+            ) : (
+              <Link to="/Login">
+                <Button sx={navButtonStyle("/Login")} variant="contained">
+                  Login
+                </Button>
+              </Link>
+            )}
+          </Box>
         </Toolbar>
       </AppBar>
-    </div>
+    </Box>
   );
 };
 

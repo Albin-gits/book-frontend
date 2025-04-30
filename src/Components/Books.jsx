@@ -22,6 +22,8 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.applyStyles("dark", {
     backgroundColor: "#1A2027",
   }),
+  width:"250px",
+  marginLeft:"15px"
 }));
 
 const Books = () => {
@@ -29,18 +31,25 @@ const Books = () => {
   useEffect(() => {
     axios
       .get("https://api.itbook.store/1.0/new")
-
       .then((response) => {
         console.log(response.data.items);
         setUser(response.data.books);
       });
   }, []);
   return (
-    <div style={{padding:"15px", backgroundColor: "rgb(210, 180, 140)"}}>
-      <Grid container spacing={3} >
+    <div style={{ padding: "15px", backgroundColor: "rgb(210, 180, 140)" }}>
+      <Grid container spacing={3}>
         {user.map((val) => {
           return (
-            <Grid size={3} sx={{marginTop:"20px",marginBottom:"20px",}}>
+            <Grid
+              item
+              xs={12} // Full width on extra-small screens (phones)
+              sm={6}  // Half width on small screens (larger phones, small tablets)
+              md={4}  // One-third width on medium screens (tablets)
+              lg={3}  // One-quarter width on large screens (desktops)
+              xl={3}  // One-quarter width on extra-large screens (large desktops)
+              sx={{ marginTop: "20px", marginBottom: "20px", }}
+            >
               <Link
                 to={`/BookReview/${val.isbn13}`}
                 style={{ textDecoration: "none" }}
@@ -50,10 +59,18 @@ const Books = () => {
                     position: "relative",
                     "&:hover .hoverText": {
                       opacity: 1,
+                     
                     },
                   }}
                 >
-                  <Card sx={{ maxWidth: 345 }}>
+                  <Card
+                    sx={{
+                      maxWidth: 345,
+                      "@media (max-width: 600px)": { // Adjust breakpoint as needed
+                        
+                      },
+                    }}
+                  >
                     <CardMedia
                       sx={{ height: 140, marginTop: "10px" }}
                       image={val.image}

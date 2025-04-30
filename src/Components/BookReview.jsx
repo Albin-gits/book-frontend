@@ -110,8 +110,9 @@ const BookReview = () => {
           flexDirection: "column",
           maxWidth: "300px",
           margin: "20px auto",
-          marginTop: "35px",
+          marginTop: "30px",
           borderRadius: "15px",
+          marginBottom:"15px"
         }}
       >
         <form
