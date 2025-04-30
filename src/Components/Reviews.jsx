@@ -22,6 +22,23 @@ const Reviews = () => {
     axios.get("https://book-backend-uu0f.onrender.com/reviews").then((res) => {
       setReviews(res.data);
     });
+    const script = document.createElement('script');
+    script.async = true;
+    script.crossOrigin = 'anonymous';
+    script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6827169877299297';
+
+    // Check if the script already exists to avoid duplicates
+    if (!document.querySelector(`script[src="${script.src}"]`)) {
+        document.head.appendChild(script);
+    }
+
+    // Cleanup function to remove the script when the component unmounts (optional, but good practice)
+    return () => {
+        const existingScript = document.querySelector(`script[src="${script.src}"]`);
+        if (existingScript) {
+            document.head.removeChild(existingScript);
+        }
+    };
   }, []);
 
   const handleDelete = async (id) => {
