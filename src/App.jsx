@@ -18,7 +18,7 @@ import AdBooks from "./Components/AdBooks";
 import AdUser from "./Components/AdUser";
 import AdReview from "./Components/AdReview";
 
-
+import AdBanner from "./Components/AdBanner";
 import Contact from "./Components/Contact";
 function App() {
   const [count, setCount] = useState(0);
@@ -32,8 +32,15 @@ function App() {
 
   return (
     <>
-      {!(isAdminRoute || isAdBooksRoute || isAdUserRoute || isAdReviewRoute) && <Navbar />}
-      {(isAdminRoute || isAdBooksRoute || isAdUserRoute || isAdReviewRoute) && <AdminNavbar />}
+      {!(
+        isAdminRoute ||
+        isAdBooksRoute ||
+        isAdUserRoute ||
+        isAdReviewRoute
+      ) && <Navbar />}
+      {(isAdminRoute || isAdBooksRoute || isAdUserRoute || isAdReviewRoute) && (
+        <AdminNavbar />
+      )}
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/Home" element={<Home />} />
@@ -42,6 +49,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Books />
+              <AdBanner /> {/* Ad placed on Books page */}
             </ProtectedRoute>
           }
         />
@@ -50,6 +58,7 @@ function App() {
           element={
             <ProtectedRoute>
               <Reviews />
+              <AdBanner /> {/* Ad placed on Reviews page */}
             </ProtectedRoute>
           }
         />
@@ -59,9 +68,16 @@ function App() {
         <Route path="/Admin" element={<Admin />} />
         <Route path="/AdBooks" element={<AdBooks />} />
         <Route path="/AdUser" element={<AdUser />} /> {/* Route for AdUser */}
-        <Route path="/AdReview" element={<AdReview />} /> 
-        <Route path="/DisplayReview/:id" element={<DisplayReview />} />
-       
+        <Route path="/AdReview" element={<AdReview />} />
+        <Route
+          path="/DisplayReview/:id"
+          element={
+            <>
+              <DisplayReview />
+              <AdBanner /> {/* Ad placed on Display Review page */}
+            </>
+          }
+        />
         <Route path="/Contact" element={<Contact />} />
       </Routes>
     </>
