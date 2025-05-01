@@ -2,6 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const images = [
@@ -155,7 +156,7 @@ const Home = () => {
         <h3 style={{ marginTop: "1.5rem" }}>Contact</h3>
         <p style={{ lineHeight: "1.6" }}>
           If you have questions about this policy, contact us at:{" "}
-          <a href="/Contact">contact</a>
+          <Link to="/Contact">contact</Link>
         </p>
       </div>
 

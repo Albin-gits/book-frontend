@@ -5,13 +5,15 @@ import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 const BookReview = () => {
   const { isbn13 } = useParams();
- 
+
   const navigate = useNavigate();
   const location = useLocation();
   const reviewToEdit = location.state?.review;
   const isEditing = !!reviewToEdit;
 
-  const [username, setUsername] = useState(localStorage.getItem("username") || "");
+  const [username, setUsername] = useState(
+    localStorage.getItem("username") || ""
+  );
   const [reviewText, setReviewText] = useState(reviewToEdit?.reviewText || "");
   const [book, setBook] = useState(null);
   useEffect(() => {
@@ -32,9 +34,15 @@ const BookReview = () => {
       subtitle: book.subtitle,
     };
     if (isEditing) {
-      await axios.put(`https://book-backend-uu0f.onrender.com/review/${reviewToEdit._id}`, review);
+      await axios.put(
+        `https://book-backend-uu0f.onrender.com/review/${reviewToEdit._id}`,
+        review
+      );
     } else {
-      await axios.post("https://book-backend-uu0f.onrender.com/reviews", review);
+      await axios.post(
+        "https://book-backend-uu0f.onrender.com/reviews",
+        review
+      );
     }
 
     navigate("/reviews");
@@ -47,9 +55,9 @@ const BookReview = () => {
       style={{
         padding: "20px",
         margin: "0px",
-        padding: "0px",
+
         fontFamily: "Segoe UI",
-        backgroundColor: "rgb(210, 180, 140)", //(245, 245, 220)//255, 153, 51//129,77,8
+        backgroundColor: "rgb(210, 180, 140)",
         minHeight: "100vh",
         paddingBottom: "20px",
       }}
@@ -112,7 +120,7 @@ const BookReview = () => {
           margin: "20px auto",
           marginTop: "30px",
           borderRadius: "15px",
-          marginBottom:"15px"
+          marginBottom: "15px",
         }}
       >
         <form
@@ -122,7 +130,7 @@ const BookReview = () => {
             flexDirection: "column",
             maxWidth: "300px",
             margin: "20px auto",
-            height:"310px"
+            height: "310px",
           }}
         >
           <h5
@@ -188,25 +196,25 @@ const BookReview = () => {
           >
             Submit
           </button>
-          
         </form>
         <button
-            style={{
-              padding: "8px 12px",
-              backgroundColor: "rgb(129,77,8)",
-              color: "white",
-              border: "none",
-              borderRadius: "3px",
-              cursor: "pointer",
-              fontSize: "16px",
-              width:"215px",
-              margin:"auto",
-              marginBottom:"20px",marginTop:"0px",
-            }}
-            onClick={() => navigate(-1)}
-          >
-            Go Back
-          </button>
+          style={{
+            padding: "8px 12px",
+            backgroundColor: "rgb(129,77,8)",
+            color: "white",
+            border: "none",
+            borderRadius: "3px",
+            cursor: "pointer",
+            fontSize: "16px",
+            width: "215px",
+            margin: "auto",
+            marginBottom: "20px",
+            marginTop: "0px",
+          }}
+          onClick={() => navigate(-1)}
+        >
+          Go Back
+        </button>
       </div>
     </div>
   );
