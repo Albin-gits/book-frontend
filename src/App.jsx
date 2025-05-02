@@ -47,19 +47,19 @@ function App() {
         <Route
           path="/Books"
           element={
-            <ProtectedRoute>
+            <>
               <Books />
               <AdBanner /> {/* Ad placed on Books page */}
-            </ProtectedRoute>
+            </>
           }
         />
         <Route
           path="/Reviews"
           element={
-            <ProtectedRoute>
+            <>
               <Reviews />
               <AdBanner /> {/* Ad placed on Reviews page */}
-            </ProtectedRoute>
+            </>
           }
         />
         <Route path="/Login" element={<Login />} />

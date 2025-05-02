@@ -34,12 +34,7 @@ const DisplayReview = () => {
         src={review.image}
         alt={review.bookTitle}
       />
-      <Button
-        variant="contained"
-        style={{ marginLeft:"-230px"}}
-      >
-        Buy Now
-      </Button>
+      
 
      <div style={{textAlign:"justify"}}>
         <p><strong>{review.bookTitle}</strong></p>

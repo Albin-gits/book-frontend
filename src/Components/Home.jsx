@@ -107,58 +107,83 @@ const Home = () => {
       </div>
 
       {/* Privacy Policy Section */}
-      <div
-        style={{
-          
-          padding: "3rem 1.5rem",
+      <div className="privacy-policy" style={{ padding: "3rem 1.5rem",
           paddingLeft: "2.5rem",
           backgroundColor: "lightgray",
           borderTop: "1px solid #e0e0e0",
           borderRadius: "0.75rem",
-          boxShadow: "0 0.125rem 0.625rem rgba(0,0,0,0.05)",
-        }}
-      >
-        <h1 style={{ color: "#2c3e50", textAlign: "center", fontSize: "2rem" }}>
-          Privacy Policy
-        </h1>
+          boxShadow: "0 0.125rem 0.625rem rgba(0,0,0,0.05)", }}>
+      <h1 style={{ color: "#2c3e50", textAlign: "center", fontSize: "2rem" }}>Privacy Policy</h1>
+      
 
-        <p style={{ fontSize: "1.1rem", lineHeight: "1.6" }}>
-          At <strong>BookLens</strong>, your privacy is important to us. This
-          policy outlines what personal information we collect and how we use
-          it.
-        </p>
+      <h2>1. Introduction</h2>
+      <p>
+        Welcome to <strong>Book Lens</strong>. We are committed to protecting your
+        privacy and ensuring transparency about how we collect, use, and share your information when you visit our
+        website https://bookslens.netlify.app/.
+      </p>
 
-        <h3 style={{ marginTop: "1.5rem" }}>Information We Collect</h3>
-        <p style={{ lineHeight: "1.6" }}>
-          We may collect your name, email address, and any information you
-          submit through forms on our site (like reviews or messages).
-        </p>
+      <h2>2. Information We Collect</h2>
+      <ul>
+        <li><strong>Personal Information:</strong> Name, email address, etc. (only if provided voluntarily)</li>
+        <li><strong>Non-Personal Information:</strong> Browser type, IP address, pages visited, etc.</li>
+        <li><strong>Cookies and Tracking:</strong> Used to personalize content and ads.</li>
+      </ul>
 
-        <h3 style={{ marginTop: "1.5rem" }}>Cookies and Tracking</h3>
-        <p style={{ lineHeight: "1.6" }}>
-          We use cookies and third-party tools like Google Analytics to improve
-          your experience and understand how visitors interact with our site.
-        </p>
+      <h2>3. Use of Google AdSense and Cookies</h2>
+      <ul>
+        <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to your website or other websites.</li>
+        <li>Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.</li>
+        <li>
+          Users may opt out of personalized advertising by visiting <a href="https://adssettings.google.com" target="_blank" rel="noopener noreferrer">Ads Settings</a>.
+        </li>
+        <li>
+          Alternatively, users can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="http://www.aboutads.info" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.
+        </li>
+      </ul>
 
-        <h3 style={{ marginTop: "1.5rem" }}>Affiliate Disclosure</h3>
-        <p style={{ lineHeight: "1.6" }}>
-          Some of the links on our site are affiliate links or images (e.g.,
-          Amazon, Google AdSense). This means we may earn a small commission at
-          no extra cost to you if you make a purchase or click.
-        </p>
+      <h2>4. How We Use Your Information</h2>
+      <ul>
+        <li>To operate and improve our website</li>
+        <li>To serve relevant advertising</li>
+        <li>To communicate with users</li>
+        <li>To analyze user behavior and traffic</li>
+      </ul>
 
-        <h3 style={{ marginTop: "1.5rem" }}>Data Protection</h3>
-        <p style={{ lineHeight: "1.6" }}>
-          We do not sell, trade, or share your personal data with third parties,
-          except as required by law or as necessary to operate the website.
-        </p>
+      <h2>5. Sharing Your Information</h2>
+      <p>
+        We do <strong>not sell</strong> your personal information. We may share your data with:
+        <ul>
+          <li>Third-party service providers</li>
+          <li>Legal authorities when required</li>
+        </ul>
+      </p>
 
-        <h3 style={{ marginTop: "1.5rem" }}>Contact</h3>
-        <p style={{ lineHeight: "1.6" }}>
-          If you have questions about this policy, contact us at:{" "}
-          <Link to="/Contact">contact</Link>
-        </p>
-      </div>
+      <h2>6. Your Rights and Choices</h2>
+      <ul>
+        <li>Opt out of personalized advertising</li>
+        <li>Disable cookies through your browser</li>
+        <li>Request data deletion (if applicable)</li>
+      </ul>
+
+      <h2>7. External Links</h2>
+      <p>
+        Our site may link to external websites. We are not responsible for their privacy practices.
+      </p>
+
+      <h2>8. Changes to This Policy</h2>
+      <p>
+        We may update this Privacy Policy. Any changes will be posted here.
+      </p>
+
+      <h2>9. Contact Us</h2>
+      <p>
+        If you have questions, please contact us at:<br />
+        📧 <Link to="/Contact">Contact</Link><br />
+        📍 [Book Lens]
+      </p>
+    </div>
+
 
       {/* Footer */}
       <footer
