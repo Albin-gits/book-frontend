@@ -3,27 +3,39 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+
 const BookReview = () => {
   const { isbn13 } = useParams();
-
   const navigate = useNavigate();
   const location = useLocation();
   const reviewToEdit = location.state?.review;
   const isEditing = !!reviewToEdit;
-
-  const [username, setUsername] = useState(
-    localStorage.getItem("username") || ""
-  );
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
   const [reviewText, setReviewText] = useState(reviewToEdit?.reviewText || "");
   const [book, setBook] = useState(null);
+  const [loading, setLoading] = useState(true); // Add loading state
+  const [error, setError] = useState(null);     // Add error state
+
   useEffect(() => {
-    axios.get(`https://api.itbook.store/1.0/books/${isbn13}`).then((res) => {
-      setBook(res.data);
-    });
+    // Fetch book details from your backend API
+    setLoading(true); // Start loading
+    axios
+      .get(`http://localhost:3004/books/${isbn13}`) // Changed API URL
+      .then((res) => {
+        setBook(res.data);
+        setLoading(false); // Stop loading on success
+      })
+      .catch((err) => {
+        setError(err);     // Set error state
+        setLoading(false); // Stop loading on error
+        console.error("Error fetching book details:", err);
+      });
   }, [isbn13]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!book) return; // Prevent submission if book is null
+
     const review = {
       username,
       reviewText,
@@ -39,23 +51,20 @@ const BookReview = () => {
         review
       );
     } else {
-      await axios.post(
-        "https://book-backend-uu0f.onrender.com/reviews",
-        review
-      );
+      await axios.post("https://book-backend-uu0f.onrender.com/reviews", review);
     }
-
     navigate("/reviews");
   };
 
-  if (!book) return <p>Loading...</p>;
+  if (loading) return <p>Loading...</p>; // Show loading message
+  if (error) return <p>Error: {error.message}</p>; // Show error message
+  if (!book) return <p>Book not found</p>;
 
   return (
     <div
       style={{
         padding: "20px",
         margin: "0px",
-
         fontFamily: "Segoe UI",
         backgroundColor: "rgb(210, 180, 140)",
         minHeight: "100vh",
@@ -84,8 +93,9 @@ const BookReview = () => {
             marginTop: "0px",
             paddingTop: "0px",
             paddingBottom: "0px",
+            height:"200px"
           }}
-          src={book.image}
+          src={`http://localhost:3004/uploads/${book.image}`}
           alt={book.title}
         />
         <p

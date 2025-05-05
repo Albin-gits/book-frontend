@@ -22,36 +22,41 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.applyStyles("dark", {
     backgroundColor: "#1A2027",
   }),
-  width:"250px",
-  marginLeft:"15px"
+  width: "250px",
+  marginLeft: "15px",
 }));
 
 const Books = () => {
-  var [user, setUser] = useState([]);
+  const [books, setBooks] = useState([]); 
   useEffect(() => {
     axios
-      .get("https://api.itbook.store/1.0/new")
-      .then((response) => {
-        console.log(response.data.items);
-        setUser(response.data.books);
+      .get("http://localhost:3004/books")
+      .then((res) => {
+        setBooks(res.data);
+      })
+      .catch((err) => {
+        console.error("Error fetching books:", err);
       });
   }, []);
   return (
-    <div style={{ padding: "15px", backgroundColor: "rgb(210, 180, 140)" }}>
+    <div style={{ padding: "15px", backgroundColor: "rgb(210, 180, 140)",minHeight:"100vh"}}>
+      <h1 style={{textAlign:"center"}}>Books</h1>
       <Grid container spacing={3}>
-        {user.map((val) => {
+      
+        {books.map((book) => {
           return (
+            
             <Grid
               item
               xs={12} // Full width on extra-small screens (phones)
-              sm={6}  // Half width on small screens (larger phones, small tablets)
-              md={4}  // One-third width on medium screens (tablets)
-              lg={3}  // One-quarter width on large screens (desktops)
-              xl={3}  // One-quarter width on extra-large screens (large desktops)
-              sx={{ marginTop: "20px", marginBottom: "20px", }}
+              sm={6} // Half width on small screens (larger phones, small tablets)
+              md={4} // One-third width on medium screens (tablets)
+              lg={3} // One-quarter width on large screens (desktops)
+              xl={3} // One-quarter width on extra-large screens (large desktops)
+           
             >
               <Link
-                to={`/BookReview/${val.isbn13}`}
+                to={`/BookReview/${book.isbn13}`}
                 style={{ textDecoration: "none" }}
               >
                 <Item
@@ -59,34 +64,34 @@ const Books = () => {
                     position: "relative",
                     "&:hover .hoverText": {
                       opacity: 1,
-                     
                     },
                   }}
                 >
                   <Card
                     sx={{
-                      maxWidth: 345,
-                      "@media (max-width: 600px)": { // Adjust breakpoint as needed
-                        
+                      maxWidth: 345,width:"250px",height:"350px",
+                      "@media (max-width: 600px)": {
+                        // Adjust breakpoint as needed
                       },
                     }}
                   >
                     <CardMedia
-                      sx={{ height: 140, marginTop: "10px" }}
-                      image={val.image}
-                      title={val.title}
+                      sx={{  height:190,width:"150px",margin:"auto"}}
+                      image={`http://localhost:3004/uploads/${book.image}`}
+                      
                     />
 
                     <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {val.price}
+                    <Typography gutterBottom variant="h6" component="div">
+                        {book.title}
                       </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "text.secondary" }}
-                      >
-                        {val.subtitle}
+                      <Typography variant="body2" color="text.secondary">
+                    {book.subtitle}
+                  </Typography>
+                      <Typography variant="subtitle2" color="primary">
+                    {book.price}
                       </Typography>
+                      
                     </CardContent>
                     <Box
                       className="hoverText"

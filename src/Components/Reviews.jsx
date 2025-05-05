@@ -35,12 +35,12 @@ const Reviews = () => {
 
   return (
     <div style={{ backgroundColor: "rgb(210, 180, 140)", minHeight: "100vh" }}>
-      <Container sx={{ paddingY: 4 }}>
+      <Container sx={{ paddingY: 4}}>
         <Typography variant="h4" align="center" gutterBottom>
           All Reviews
         </Typography>
         <Grid
-          sx={{ marginLeft: "25px", paddingLeft: "10px" }}
+          sx={{ marginLeft: "5px", paddingLeft: "10px" }}
           container
           spacing={4}
         >
@@ -56,27 +56,24 @@ const Reviews = () => {
               <Card
                 onClick={() => navigate(`/displayreview/${review._id}`)}
                 sx={{
-                  height: 300,
+                  height: 310,
                   cursor: "pointer",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  width: "250px",
+                  width: "200px",
                   "&:hover": { boxShadow: 6 },
                   position: "relative",
                 }}
               >
                 <CardMedia
                   sx={{
-                    height: 150,
-                    width: 180,
-                    margin: "auto",
-                    marginTop: "15px",
+                    height:220,width:"150px",margin:"auto",marginTop: "10px",marginBottom:"0px"
                   }}
-                  image={review.image}
+                  image={`http://localhost:3004/uploads/${review.image}`}
                 />
                 <CardContent
-                  sx={{ flexGrow: 1, overflow: "hidden", maxHeight: 150 }}
+                  sx={{ flexGrow: 1, overflow: "hidden", maxHeight: 150,marginTop:"-15px"}}
                 >
                   <Typography
                     sx={{

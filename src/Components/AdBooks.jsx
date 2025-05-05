@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: "#fff",
@@ -34,27 +33,26 @@ const AdBooks = () => {
     isbn13: "",
     price: "",
     url: "",
-    image: null, // file object
+    image: null,
   });
 
-  // Fetch books from your backend API
   useEffect(() => {
-    axios
-      .get("https://book-backend-uu0f.onrender.com/books") // Changed API endpoint
-      .then((response) => {
-        setBooks(response.data); // Assuming your backend returns an array of book objects
-      })
-      .catch((error) => {
-        console.error("Error fetching books:", error);
-      });
+    fetchBooks();
   }, []);
 
-  // Handle text field changes (remains the same)
+  const fetchBooks = async () => {
+    try {
+      const res = await axios.get("http://localhost:3004/books");
+      setBooks(res.data);
+    } catch (err) {
+      console.error("Error fetching books:", err);
+    }
+  };
+
   const handleInputChange = (e) => {
     setNewBook({ ...newBook, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission (remains largely the same)
   const handleAddBook = async () => {
     try {
       const formData = new FormData();
@@ -67,20 +65,12 @@ const AdBooks = () => {
         formData.append("image", newBook.image);
       }
 
-      // Log the FormData for debugging (optional)
-      for (let [key, value] of formData.entries()) {
-        console.log(`${key}:`, value);
-      }
-
-      await axios.post(
-        "https://book-backend-uu0f.onrender.com/addbook",
-        formData,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
-      );
+      await axios.post("http://localhost:3004/addbook", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
 
       alert("Book added successfully!");
+      fetchBooks();
       setOpenForm(false);
       setNewBook({
         title: "",
@@ -92,64 +82,39 @@ const AdBooks = () => {
       });
     } catch (error) {
       console.error("Add book error:", error.response?.data || error.message);
-      alert(
-        "Error adding book: " +
-          (error.response?.data?.message || error.message || "Unknown error")
-      );
+      alert("Error adding book: " + (error.response?.data?.message || error.message));
     }
   };
 
   return (
-    <div
-      style={{
-        padding: "10px",
-        backgroundColor: "rgb(210, 180, 140)",
-        maxWidth: "100%",
-      }}
-    >
-      <h1>Books List</h1>
-      <Grid container spacing={3}>
+    <div style={{ padding: "10px", backgroundColor: "rgb(210, 180, 140)",minHeight:"100vh"}}>
+      <h1 style={{textAlign:"center"}}>Books List</h1>
+      <Grid container spacing={5} sx={{marginLeft:"80px"}}>
         {books.map((val) => (
-          <Grid item xs={12} sm={6} md={3} key={val.isbn13}>
-            <Link
-              to={`/BookReview/${val.isbn13}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Item>
-                <Card sx={{ maxWidth: 345 }}>
-                  <CardMedia
-                    sx={{ height: 140 }}
-                    // Assuming your book object from the database has an 'image' property
-                    image={`https://book-backend-uu0f.onrender.com/uploads/${val.image}`}
-                    title={val.title}
-                  />
-                  <CardContent>
-                    <Typography variant="h6">{val.title}</Typography>
-                    <Typography variant="body2" color="text.secondary">
-                      {val.subtitle}
-                    </Typography>
-                    <Typography variant="subtitle2" color="primary">
-                      {val.price}
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Item>
-            </Link>
+          <Grid item xs={12} sm={6} md={3} key={val._id}>
+            <Item>
+              <Card sx={{ maxWidth: 345,width:"220px",height:"350px"}}>
+                <CardMedia
+                  sx={{ height:190,width:"150px",marginLeft:"33px"}}
+                  image={`http://localhost:3004/uploads/${val.image}`} 
+                />
+                <CardContent>
+                  <Typography variant="h6">{val.title}</Typography>
+                  <Typography variant="body2" color="text.secondary">
+                    {val.subtitle}
+                  </Typography>
+                  <Typography variant="subtitle2" color="primary">
+                    {val.price}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Item>
           </Grid>
         ))}
 
-        {/* Add New Book Card (remains the same) */}
-        <Grid item xs={12} sm={6} md={3}>
-          <Item
-            sx={{
-              border: "2px dashed #888",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              height: "100%",
-            }}
-          >
-            <Card sx={{ maxWidth: 345 }}>
+        <Grid item xs={12} sm={6} md={3} sx={{marginTop:"55px"}}>
+          <Item> 
+            <Card sx={{ maxWidth: 345,width:"200px",}}>
               <CardContent sx={{ textAlign: "center" }}>
                 <Typography variant="h5" gutterBottom>
                   Add a New Book
@@ -167,7 +132,6 @@ const AdBooks = () => {
         </Grid>
       </Grid>
 
-      {/* Dialog Form for New Book (remains the same) */}
       <Dialog open={openForm} onClose={() => setOpenForm(false)}>
         <DialogTitle>Add New Book</DialogTitle>
         <DialogContent>
@@ -175,7 +139,6 @@ const AdBooks = () => {
             margin="dense"
             name="title"
             label="Book Title"
-            type="text"
             fullWidth
             required
             value={newBook.title}
@@ -185,7 +148,6 @@ const AdBooks = () => {
             margin="dense"
             name="subtitle"
             label="Subtitle"
-            type="text"
             fullWidth
             value={newBook.subtitle}
             onChange={handleInputChange}
@@ -194,7 +156,6 @@ const AdBooks = () => {
             margin="dense"
             name="isbn13"
             label="ISBN13"
-            type="text"
             fullWidth
             value={newBook.isbn13}
             onChange={handleInputChange}
@@ -203,7 +164,6 @@ const AdBooks = () => {
             margin="dense"
             name="price"
             label="Price"
-            type="text"
             fullWidth
             value={newBook.price}
             onChange={handleInputChange}
@@ -212,7 +172,6 @@ const AdBooks = () => {
             margin="dense"
             name="url"
             label="Book URL"
-            type="url"
             fullWidth
             value={newBook.url}
             onChange={handleInputChange}

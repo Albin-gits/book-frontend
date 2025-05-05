@@ -23,7 +23,7 @@ const Admin = () => {
     fetch("https://book-backend-uu0f.onrender.com/usercount")
       .then((res) => res.json())
       .then((data) => setUserCount(data.count))
-      .catch((err) => console.error("Error fetching user count:", err));
+      .catch((err) => console.error("Error fetching user count:"  , err));
 
     // Fetch review count
     fetch("https://book-backend-uu0f.onrender.com/reviewcount")
@@ -32,7 +32,7 @@ const Admin = () => {
       .catch((err) => console.error("Error fetching review count:", err));
 
     // Fetch book count
-    fetch("https://book-backend-uu0f.onrender.com/bookcount")
+    fetch("http://localhost:3004/bookcount")
       .then((res) => res.json())
       .then((data) => setBookCount(data.count))
       .catch((err) => console.error("Error fetching book count:", err));
