@@ -1,15 +1,19 @@
 import React, { useEffect, useState } from "react";
-
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
+import {
+  Card,
+  CardContent,
+  CardMedia,
+  Typography,
+  Grid,
+  Button,
+  TextField,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Paper,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
-import Grid from "@mui/material/Grid"; //grid and card
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -18,88 +22,137 @@ const Item = styled(Paper)(({ theme }) => ({
   ...theme.typography.body2,
   padding: theme.spacing(1),
   textAlign: "center",
-  color: (theme.vars ?? theme).palette.text.secondary,
-  ...theme.applyStyles("dark", {
-    backgroundColor: "#1A2027",
-  }),
+  color: theme.palette.text.secondary,
 }));
 
 const AdBooks = () => {
-  var [user, setUser] = useState([]);
+  const [books, setBooks] = useState([]);
+  const [openForm, setOpenForm] = useState(false);
+  const [newBook, setNewBook] = useState({
+    title: "",
+    subtitle: "",
+    isbn13: "",
+    price: "",
+    url: "",
+    image: null, // file object
+  });
+
+  // Fetch books from the API
   useEffect(() => {
-    axios
-      .get("https://api.itbook.store/1.0/new")
-      .then((response) => {
-        console.log(response.data.items);
-        setUser(response.data.books);
-      });
+    axios.get("https://api.itbook.store/1.0/new").then((response) => {
+      setBooks(response.data.books);
+    });
   }, []);
 
+  // Handle text field changes
+  const handleInputChange = (e) => {
+    setNewBook({ ...newBook, [e.target.name]: e.target.value });
+  };
+
+  // Handle form submission
+  const handleAddBook = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("title", newBook.title);
+      formData.append("subtitle", newBook.subtitle);
+      formData.append("isbn13", newBook.isbn13);
+      formData.append("price", newBook.price);
+      formData.append("url", newBook.url);
+      if (newBook.image) {
+        formData.append("image", newBook.image);
+      }
+  
+      // Log the FormData for debugging
+      for (let [key, value] of formData.entries()) {
+        console.log(`${key}:`, value);
+      }
+  
+      await axios.post(
+        "https://book-backend-uu0f.onrender.com/addbook",
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
+      );
+  
+      alert("Book added successfully!");
+      setOpenForm(false);
+      setNewBook({
+        title: "",
+        subtitle: "",
+        isbn13: "",
+        price: "",
+        url: "",
+        image: null,
+      });
+    } catch (error) {
+      console.error("Add book error:", error.response?.data || error.message);
+      alert(
+        "Error adding book: " +
+          (error.response?.data?.message || error.message || "Unknown error")
+      );
+    }
+  };
+
   return (
-    <div style={{ padding:"10px", backgroundColor: "rgb(210, 180, 140)", maxWidth: "100%" }}>
-      <h1 style={{ margin:"0px", marginBottom:"10px" }}>Books List</h1>
+    <div
+      style={{
+        padding: "10px",
+        backgroundColor: "rgb(210, 180, 140)",
+        maxWidth: "100%",
+      }}
+    >
+      <h1>Books List</h1>
       <Grid container spacing={3}>
-        {user.map((val) => {
-          return (
-            <Grid size={3} sx={{ marginTop: "20px", marginBottom: "20px" }}>
-              <Link
-                to={`/BookReview/${val.isbn13}`}
-                style={{ textDecoration: "none" }}
-              >
-                <Item
-                  sx={{
-                    position: "relative",
-                    "&:hover .hoverText": {
-                      opacity: 1,
-                    },
-                  }}
-                >
-                  <Card sx={{ maxWidth: 345 }}>
-                    <CardMedia
-                      sx={{ height: 140, marginTop: "10px" }}
-                      image={val.image}
-                      title={val.title}
-                    />
-                    <CardContent>
-                      <Typography gutterBottom variant="h5" component="div">
-                        {val.price}
-                      </Typography>
-                      <Typography
-                        variant="body2"
-                        sx={{ color: "text.secondary" }}
-                      >
-                        {val.subtitle}
-                      </Typography>
-                    </CardContent>
-                  </Card>
-                </Item>
-              </Link>
-            </Grid>
-          );
-        })}
+        {books.map((val) => (
+          <Grid item xs={12} sm={6} md={3} key={val.isbn13}>
+            <Link
+              to={`/BookReview/${val.isbn13}`}
+              style={{ textDecoration: "none" }}
+            >
+              <Item>
+                <Card sx={{ maxWidth: 345 }}>
+                  <CardMedia
+                    sx={{ height: 140 }}
+                    image={val.image}
+                    title={val.title}
+                  />
+                  <CardContent>
+                    <Typography variant="h6">{val.title}</Typography>
+                    <Typography variant="body2" color="text.secondary">
+                      {val.subtitle}
+                    </Typography>
+                    <Typography variant="subtitle2" color="primary">
+                      {val.price}
+                    </Typography>
+                  </CardContent>
+                </Card>
+              </Item>
+            </Link>
+          </Grid>
+        ))}
 
         {/* Add New Book Card */}
-        <Grid size={3} sx={{ marginTop: "20px", marginBottom: "20px"}}>
+        <Grid item xs={12} sm={6} md={3}>
           <Item
             sx={{
-              position: "relative",
-              height: "100%",
-              backgroundColor: "#f5f5f5",
               border: "2px dashed #888",
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
-              padding: "20px",
-              marginTop:"-25px",
+              height: "100%",
             }}
           >
-            <Card sx={{ maxWidth: 345, display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-              <CardContent>
-                <Typography variant="h5" component="div" style={{ marginBottom: "20px" }}>
+            <Card sx={{ maxWidth: 345 }}>
+              <CardContent sx={{ textAlign: "center" }}>
+                <Typography variant="h5" gutterBottom>
                   Add a New Book
                 </Typography>
-                {/* Custom button or form to add a new book */}
-                <Button variant="contained" color="primary">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={() => setOpenForm(true)}
+                >
                   Add Book
                 </Button>
               </CardContent>
@@ -107,6 +160,75 @@ const AdBooks = () => {
           </Item>
         </Grid>
       </Grid>
+
+      {/* Dialog Form for New Book */}
+      <Dialog open={openForm} onClose={() => setOpenForm(false)}>
+        <DialogTitle>Add New Book</DialogTitle>
+        <DialogContent>
+          <TextField
+            margin="dense"
+            name="title"
+            label="Book Title"
+            type="text"
+            fullWidth
+            required
+            value={newBook.title}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="dense"
+            name="subtitle"
+            label="Subtitle"
+            type="text"
+            fullWidth
+            value={newBook.subtitle}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="dense"
+            name="isbn13"
+            label="ISBN13"
+            type="text"
+            fullWidth
+            value={newBook.isbn13}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="dense"
+            name="price"
+            label="Price"
+            type="text"
+            fullWidth
+            value={newBook.price}
+            onChange={handleInputChange}
+          />
+          <TextField
+            margin="dense"
+            name="url"
+            label="Book URL"
+            type="url"
+            fullWidth
+            value={newBook.url}
+            onChange={handleInputChange}
+          />
+          <label style={{ marginTop: "15px", display: "block" }}>
+            Upload Book Cover Image:
+          </label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={(e) =>
+              setNewBook({ ...newBook, image: e.target.files[0] })
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={() => setOpenForm(false)}>Cancel</Button>
+          <Button onClick={handleAddBook} variant="contained">
+            Submit
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 };

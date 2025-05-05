@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@mui/material";
 
@@ -34,8 +34,9 @@ const DisplayReview = () => {
         src={review.image}
         alt={review.bookTitle}
       />
-      
-
+      <Link to="/BookLink" style={{textDecoration:"none"}}>
+      <Button variant="contained" sx={{display:"flex",marginLeft:"105px",marginTop:"-20px",}}> Buy Now</Button>
+</Link>
      <div style={{textAlign:"justify"}}>
         <p><strong>{review.bookTitle}</strong></p>
         <p>

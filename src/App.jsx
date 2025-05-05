@@ -20,6 +20,7 @@ import AdReview from "./Components/AdReview";
 
 import AdBanner from "./Components/AdBanner";
 import Contact from "./Components/Contact";
+import BookLink from "./Components/BookLink";
 function App() {
   const [count, setCount] = useState(0);
 
@@ -79,6 +80,7 @@ function App() {
           }
         />
         <Route path="/Contact" element={<Contact />} />
+        <Route path="/BookLink" element={<BookLink/>}/>
       </Routes>
     </>
   );
