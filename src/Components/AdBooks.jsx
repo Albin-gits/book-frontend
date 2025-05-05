@@ -37,19 +37,24 @@ const AdBooks = () => {
     image: null, // file object
   });
 
-  // Fetch books from the API
+  // Fetch books from your backend API
   useEffect(() => {
-    axios.get("https://api.itbook.store/1.0/new").then((response) => {
-      setBooks(response.data.books);
-    });
+    axios
+      .get("https://book-backend-uu0f.onrender.com/books") // Changed API endpoint
+      .then((response) => {
+        setBooks(response.data); // Assuming your backend returns an array of book objects
+      })
+      .catch((error) => {
+        console.error("Error fetching books:", error);
+      });
   }, []);
 
-  // Handle text field changes
+  // Handle text field changes (remains the same)
   const handleInputChange = (e) => {
     setNewBook({ ...newBook, [e.target.name]: e.target.value });
   };
 
-  // Handle form submission
+  // Handle form submission (remains largely the same)
   const handleAddBook = async () => {
     try {
       const formData = new FormData();
@@ -61,12 +66,12 @@ const AdBooks = () => {
       if (newBook.image) {
         formData.append("image", newBook.image);
       }
-  
-      // Log the FormData for debugging
+
+      // Log the FormData for debugging (optional)
       for (let [key, value] of formData.entries()) {
         console.log(`${key}:`, value);
       }
-  
+
       await axios.post(
         "https://book-backend-uu0f.onrender.com/addbook",
         formData,
@@ -74,7 +79,7 @@ const AdBooks = () => {
           headers: { "Content-Type": "multipart/form-data" },
         }
       );
-  
+
       alert("Book added successfully!");
       setOpenForm(false);
       setNewBook({
@@ -114,7 +119,8 @@ const AdBooks = () => {
                 <Card sx={{ maxWidth: 345 }}>
                   <CardMedia
                     sx={{ height: 140 }}
-                    image={val.image}
+                    // Assuming your book object from the database has an 'image' property
+                    image={`https://book-backend-uu0f.onrender.com/uploads/${val.image}`}
                     title={val.title}
                   />
                   <CardContent>
@@ -132,7 +138,7 @@ const AdBooks = () => {
           </Grid>
         ))}
 
-        {/* Add New Book Card */}
+        {/* Add New Book Card (remains the same) */}
         <Grid item xs={12} sm={6} md={3}>
           <Item
             sx={{
@@ -161,7 +167,7 @@ const AdBooks = () => {
         </Grid>
       </Grid>
 
-      {/* Dialog Form for New Book */}
+      {/* Dialog Form for New Book (remains the same) */}
       <Dialog open={openForm} onClose={() => setOpenForm(false)}>
         <DialogTitle>Add New Book</DialogTitle>
         <DialogContent>
