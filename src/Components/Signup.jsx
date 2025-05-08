@@ -88,7 +88,7 @@ const Signup = () => {
             return;
         }
         axios
-            .post('https://book-backend-uu0f.onrender.com/add', inputs)
+            .post('http://localhost:3004/add', inputs)
             .then((response) => {
                 console.log(response);
                 alert(response.data.message);

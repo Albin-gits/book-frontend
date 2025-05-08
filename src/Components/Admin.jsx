@@ -20,13 +20,13 @@ const Admin = () => {
   const [mostPopularBooksData, setMostPopularBooksData] = useState([]);
   useEffect(() => {
     // Fetch user count
-    fetch("https://book-backend-uu0f.onrender.com/usercount")
+    fetch("http://localhost:3004/usercount")
       .then((res) => res.json())
       .then((data) => setUserCount(data.count))
       .catch((err) => console.error("Error fetching user count:"  , err));
 
     // Fetch review count
-    fetch("https://book-backend-uu0f.onrender.com/reviewcount")
+    fetch("http://localhost:3004/reviewcount")
       .then((res) => res.json())
       .then((data) => setReviewCount(data.count))
       .catch((err) => console.error("Error fetching review count:", err));
@@ -36,7 +36,7 @@ const Admin = () => {
       .then((res) => res.json())
       .then((data) => setBookCount(data.count))
       .catch((err) => console.error("Error fetching book count:", err));
-    fetch("https://book-backend-uu0f.onrender.com/reviews-over-time")
+    fetch("http://localhost:3004/reviews-over-time")
       .then((res) => res.json())
       .then((data) => setReviewsOverTimeData(data))
       .catch((err) =>
@@ -44,7 +44,7 @@ const Admin = () => {
       );
 
     // Fetch data for Most Popular Books
-    fetch("https://book-backend-uu0f.onrender.com/most-popular-books")
+    fetch("http://localhost:3004/most-popular-books")
       .then((res) => res.json())
       .then((data) => setMostPopularBooksData(data))
       .catch((err) =>

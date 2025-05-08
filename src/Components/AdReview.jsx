@@ -18,7 +18,7 @@ const AdReview = () => {
   // Fetch reviews from the backend
   const fetchReviews = async () => {
     try {
-      const response = await axios.get('https://book-backend-uu0f.onrender.com/reviews');
+      const response = await axios.get('http://localhost:3004/reviews');
       setReviews(response.data);
     } catch (error) {
       console.error('Error fetching reviews:', error);
@@ -32,7 +32,7 @@ const AdReview = () => {
   // Delete a review
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://book-backend-uu0f.onrender.com/review/${id}`);
+      await axios.delete(`http://localhost:3004/review/${id}`);
       setReviews(reviews.filter((review) => review._id !== id));
     } catch (error) {
       console.error('Error deleting review:', error);
@@ -40,8 +40,8 @@ const AdReview = () => {
   };
 
   return (
-    <div style={{ padding: "20px",backgroundColor: "rgb(210, 180, 140)",minHeight:"100vh" }}>
-      <h2 style={{margin:"0px",marginBottom:"10px"}}>Manage Reviews</h2>
+    <div style={{ padding: "20px", backgroundColor: "rgb(210, 180, 140)", minHeight: "100vh" }}>
+      <h2 style={{ margin: "0px", marginBottom: "10px" }}>Manage Reviews</h2>
       <TableContainer component={Paper}>
         <Table>
           <TableHead style={{ backgroundColor: '#f0f0f0' }}>
@@ -57,7 +57,26 @@ const AdReview = () => {
               <TableRow key={review._id}>
                 <TableCell>{review.bookTitle}</TableCell>
                 <TableCell>{review.username}</TableCell>
-                <TableCell>{review.reviewText}</TableCell>
+                <TableCell>
+                  {/* Display text review if available */}
+                  {review.reviewText && (
+                    <p><strong>Text:</strong> {review.reviewText}</p>
+                  )}
+
+                  {/* Display audio review if available */}
+                  {review.audio && (
+                    <div>
+                      <strong>Audio:</strong>
+                      <audio controls style={{ display: "block", marginTop: "5px" }}>
+                        <source
+                          src={`http://localhost:3004/uploads/${review.audio}`}
+                          type="audio/webm"
+                        />
+                        Your browser does not support the audio element.
+                      </audio>
+                    </div>
+                  )}
+                </TableCell>
                 <TableCell>
                   <Button
                     variant="contained"

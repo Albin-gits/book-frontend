@@ -19,13 +19,13 @@ const Reviews = () => {
   const loggedInUser = localStorage.getItem("username");
 
   useEffect(() => {
-    axios.get("https://book-backend-uu0f.onrender.com/reviews").then((res) => {
+    axios.get("http://localhost:3004/reviews").then((res) => {
       setReviews(res.data);
     });
   }, []);
 
   const handleDelete = async (id) => {
-    await axios.delete(`https://book-backend-uu0f.onrender.com/review/${id}`);
+    await axios.delete(`http://localhost:3004/review/${id}`);
     setReviews(reviews.filter((r) => r._id !== id));
   };
 

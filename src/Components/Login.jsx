@@ -123,7 +123,7 @@ const Login = () => {
     }
 
     try {
-      const res = await axios.post("https://book-backend-uu0f.onrender.com/view", inputs);
+      const res = await axios.post("http://localhost:3004/view", inputs);
       alert(res.data.message);
 
       if (usertype === "admin" && inputs.username === "Admin") {
